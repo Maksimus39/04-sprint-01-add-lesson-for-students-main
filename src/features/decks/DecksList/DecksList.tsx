@@ -1,18 +1,16 @@
 import s from './DecksList.module.css'
 import { useEffect } from 'react'
-import { decksApi } from '../decks-api.ts'
 import { useAppDispatch, useAppSelector } from '../../../app/store.ts'
-import { setDecksActionCreator } from '../decks-reducer.ts'
 import { DeckItem } from './DeckItem/DeckItem.tsx'
+import { decksSelectors } from '../decks-selectors.ts'
+import { fetchDecksThunkCreator } from '../decks-thunks.ts'
 
 export const DecksList = () => {
   const dispatch = useAppDispatch()
-  const decks = useAppSelector((state) => state.decksReducer.decks)
+  const decks = useAppSelector(decksSelectors)
 
   useEffect(() => {
-    decksApi.fetchDecks().then((res) => {
-      dispatch(setDecksActionCreator(res.data.items))
-    })
+    dispatch(fetchDecksThunkCreator())
   }, [])
 
   return (
