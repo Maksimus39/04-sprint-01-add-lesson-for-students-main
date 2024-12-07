@@ -8,7 +8,7 @@ export const fetchDecksThunkCreator = () => (dispatch: Dispatch) => {
   })
 }
 
-export const addhDecksThunkCreator = (params: AddTeckParams) => (dispatch: Dispatch) => {
+export const addhDecksThunkCreator = (params: AddTeckParams) => async (dispatch: Dispatch) => {
   decksApi.addDeck(params).then((res) => {
     dispatch(addDecksActionCreator(res.data))
   })
