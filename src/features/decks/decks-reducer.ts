@@ -16,17 +16,31 @@ export const decksReducer = (state: DecksState = initialState, action: DecksActi
         ...state,
         decks: action.decks,
       }
+    case 'ADD/DECKS-ACTION-CREATOR':
+      return {
+        ...state,
+        decks: [action.decks, ...state.decks],
+      }
     default:
       return state
   }
 }
 
-export type SetDecksActionType = ReturnType<typeof setDecksActionCreator>
 export const setDecksActionCreator = (decks: Decks[]) => {
   return {
     type: 'SET/DECKS-ACTION-CREATOR',
     decks,
-  }
+  } as const
 }
 
-type DecksActions = SetDecksActionType
+export const addDecksActionCreator = (decks: Decks) => {
+  return {
+    type: 'ADD/DECKS-ACTION-CREATOR',
+    decks,
+  } as const
+}
+
+export type SetDecksActionType = ReturnType<typeof setDecksActionCreator>
+export type AddDecksActionType = ReturnType<typeof addDecksActionCreator>
+
+type DecksActions = SetDecksActionType | AddDecksActionType
